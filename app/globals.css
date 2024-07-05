@@ -140,11 +140,11 @@
 
 /* Account Profile  */
 .account-form_image-label {
-  @apply flex h-24 w-24 items-center justify-center rounded-full bg-dark-4 !important;
+  @apply flex h-32 w-32 items-center justify-center rounded-full bg-dark-4 !important;
 }
 
 .account-form_image-input {
-  @apply cursor-pointer border-none bg-transparent outline-none file:text-blue !important;
+  @apply cursor-pointer border-dark-4 bg-dark-3 file:text-blue !important;
 }
 
 .account-form_input {
