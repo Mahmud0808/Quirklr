@@ -142,6 +142,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   accept="image/*"
                   placeholder="Upload a photo"
                   className="account-form_image-input"
+                  autoComplete="off"
                   onChange={(e) => {
                     handleImage(e, field.onChange);
                   }}
@@ -160,7 +161,12 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                 Name
               </FormLabel>
               <FormControl className="flex-1 text-base-semibold text-gray-200">
-                <Input type="text" className="account-form_input" {...field} />
+                <Input
+                  type="text"
+                  className="account-form_input"
+                  autoComplete="off"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -175,7 +181,12 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                 Username
               </FormLabel>
               <FormControl className="flex-1 text-base-semibold text-gray-200">
-                <Input type="text" className="account-form_input" {...field} />
+                <Input
+                  type="text"
+                  className="account-form_input"
+                  autoComplete="off"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -190,7 +201,12 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                 Bio
               </FormLabel>
               <FormControl className="flex-1 text-base-semibold text-gray-200">
-                <Textarea rows={10} className="account-form_input" {...field} />
+                <Textarea
+                  rows={10}
+                  className="account-form_input"
+                  autoComplete="off"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
