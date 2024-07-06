@@ -147,6 +147,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                   }}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -161,6 +162,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
               <FormControl className="flex-1 text-base-semibold text-gray-200">
                 <Input type="text" className="account-form_input" {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -175,6 +177,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
               <FormControl className="flex-1 text-base-semibold text-gray-200">
                 <Input type="text" className="account-form_input" {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -189,6 +192,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
               <FormControl className="flex-1 text-base-semibold text-gray-200">
                 <Textarea rows={10} className="account-form_input" {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
