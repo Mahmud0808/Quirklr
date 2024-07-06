@@ -6,7 +6,7 @@ export default function Page() {
     <div>
       <AnimatedBackground />
       <div className="flex h-screen items-center justify-center flex-col p-10">
-        <SignIn />
+        <SignIn forceRedirectUrl={"/onboarding"} />
       </div>
     </div>
   );
