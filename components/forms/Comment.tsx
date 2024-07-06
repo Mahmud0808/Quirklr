@@ -72,6 +72,7 @@ const Comment = ({ threadId, currentUserId, currentUserImage }: Props) => {
                   type="text"
                   placeholder="Comment..."
                   className="no-focus text-light-1 outline-none"
+                  autoComplete="off"
                   {...field}
                 />
               </FormControl>
