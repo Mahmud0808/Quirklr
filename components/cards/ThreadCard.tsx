@@ -58,9 +58,7 @@ const ThreadCard = ({
                 {author.name}
               </h4>
             </Link>
-            <p className="mt2 text-small-regular text-light-2">
-              <ExpandableText text={content} />
-            </p>
+            <ExpandableText text={content} />
             <div className="mt-5 flex flex-col gap-3">
               <div className="flex gap-3.5">
                 <Image

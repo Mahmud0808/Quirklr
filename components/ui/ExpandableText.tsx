@@ -23,10 +23,10 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({ text }) => {
       );
     }
 
-    if (text.length > 100) {
+    if (text.length > 200) {
       return (
         <>
-          {text.substring(0, 100)}...{" "}
+          {text.substring(0, 200)}...{" "}
           <button onClick={toggleText} className="text-gray-400 font-bold">Show more</button>
         </>
       );
@@ -35,7 +35,7 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({ text }) => {
     return text;
   };
 
-  return <p>{renderText()}</p>;
+  return <p className="mt2 text-small-regular text-light-2">{renderText()}</p>;
 };
 
 export default ExpandableText;
