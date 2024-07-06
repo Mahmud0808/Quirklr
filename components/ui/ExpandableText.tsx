@@ -23,7 +23,7 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({ text }) => {
       );
     }
 
-    if (text.length > 200) {
+    if (text.length > 300) {
       return (
         <>
           {text.substring(0, 200)}...{" "}
