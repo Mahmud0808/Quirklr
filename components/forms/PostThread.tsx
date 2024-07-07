@@ -15,28 +15,16 @@ import {
 import { Textarea } from "../ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
-
-// import { updateUser } from "@/lib/actions/user.actions";
+import { useOrganization } from "@clerk/nextjs";
 import { ThreadValidationSchema } from "@/lib/validations/thread";
 import { createThread } from "@/lib/actions/thread.actions";
-
-interface Props {
-  user: {
-    id: string;
-    objectId: string;
-    username: string;
-    name: string;
-    bio: string;
-    image: string;
-  };
-  btnTitle: string;
-}
 
 function PostThread({ userId }: { userId: string }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { organization } = useOrganization();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof ThreadValidationSchema>>({
     resolver: zodResolver(ThreadValidationSchema),
     defaultValues: {
       thread: "",
@@ -48,7 +36,7 @@ function PostThread({ userId }: { userId: string }) {
     await createThread({
       text: values.thread,
       author: userId,
-      communityId: null, // TODO: Add communityId
+      communityId: organization ? organization.id : null,
       path: pathname,
     });
 
