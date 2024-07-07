@@ -25,7 +25,7 @@
 
   /* No Result */
   .no-result {
-    @apply text-center !text-base-regular text-light-3;
+    @apply h-56 text-center content-center !text-base-regular text-light-3;
   }
 
   /* Community Card */
