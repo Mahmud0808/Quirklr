@@ -32,7 +32,7 @@ const Page = async () => {
       {/* TODO: Add search bar */}
       <div className="mt-14 flex flex-col gap-9">
         {result.communities.length === 0 ? (
-          <p className="no-result">No users found</p>
+          <p className="no-result">No communities found</p>
         ) : (
           <>
             {result.communities.map((community) => (
