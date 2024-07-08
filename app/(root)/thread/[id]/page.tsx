@@ -1,5 +1,5 @@
 import ThreadCard from "@/components/cards/ThreadCard";
-import Comment from "@/components/forms/Comment";
+import CommentBox from "@/components/forms/CommentBox";
 import { fetchThreadById } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
@@ -40,7 +40,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
         />
       </div>
       <div className="mt-7">
-        <Comment
+        <CommentBox
           threadId={params.id}
           currentUserId={JSON.stringify(userInfo._id)}
           currentUserImage={userInfo.image}

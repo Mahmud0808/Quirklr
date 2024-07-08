@@ -28,7 +28,7 @@ interface Props {
   currentUserImage: string;
 }
 
-const Comment = ({ threadId, currentUserId, currentUserImage }: Props) => {
+const CommentBox = ({ threadId, currentUserId, currentUserImage }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -87,4 +87,4 @@ const Comment = ({ threadId, currentUserId, currentUserImage }: Props) => {
   );
 };
 
-export default Comment;
+export default CommentBox;
