@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-<!--     <img src="" alt="Project Banner"> -->
+    <img src="https://i.postimg.cc/8kjFJQNR/quirklr-banner.png" alt="Project Banner">
   <br />
   <br />
 
