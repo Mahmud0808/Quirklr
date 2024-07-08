@@ -1,5 +1,11 @@
 import Image from "next/image";
 import EditProfile from "../forms/EditProfile";
+import {
+  RegExpMatcher,
+  TextCensor,
+  englishDataset,
+  englishRecommendedTransformers,
+} from "obscenity";
 
 interface Props {
   accountId: string;
@@ -20,6 +26,12 @@ const ProfileHeader = ({
   bio,
   type,
 }: Props) => {
+  const censor = new TextCensor();
+  const matcher = new RegExpMatcher({
+    ...englishDataset.build(),
+    ...englishRecommendedTransformers,
+  });
+
   return (
     <div className="flex w-full flex-col justify-start">
       <div className="flex items-center justify-between">
@@ -41,7 +53,9 @@ const ProfileHeader = ({
         <EditProfile currentUserId={authUserId} authorId={accountId} />
       </div>
       {type === "User" && (
-        <p className="mt-6 max-w-lg text-base-regular text-light-2">{bio}</p>
+        <p className="mt-6 max-w-lg text-base-regular text-light-2">
+          {censor.applyTo(bio, matcher.getAllMatches(bio))}
+        </p>
       )}
       <div className="mt-12 h-0.5 w-full bg-dark-3" />
     </div>
