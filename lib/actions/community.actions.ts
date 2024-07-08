@@ -82,7 +82,7 @@ export async function fetchCommunityThreads(id: string) {
           {
             path: "author",
             model: User,
-            select: "id name image", // Select the "name" and "_id" fields from the "User" model
+            select: "id name image",
           },
           {
             path: "children",
@@ -90,7 +90,7 @@ export async function fetchCommunityThreads(id: string) {
             populate: {
               path: "author",
               model: User,
-              select: "_id image", // Select the "name" and "_id" fields from the "User" model
+              select: "_id image",
             },
           },
         ],
