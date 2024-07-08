@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { Button } from "../ui/button";
@@ -18,13 +18,14 @@ const UserCard = ({ id, name, username, imgUrl, personType }: Props) => {
   return (
     <article className="user-card">
       <div className="user-card_avatar">
-        <Image
-          src={imgUrl}
-          alt="profile image"
-          width={56}
-          height={56}
-          className="rounded-full"
-        />
+        <div className="relative h-14 w-14 object-cover">
+          <Image
+            src={imgUrl}
+            alt="profile image"
+            fill
+            className="rounded-full object-fill"
+          />
+        </div>
         <div className="flex-1 text-ellipsis">
           <h4 className="text-base-semibold text-light-1">{name}</h4>
           <p className="text-small-medium text-gray-1">@{username}</p>
@@ -33,7 +34,11 @@ const UserCard = ({ id, name, username, imgUrl, personType }: Props) => {
       <Button
         className="user-card_btn"
         onClick={() => {
-          router.push(`/profile/${id}`);
+          if (personType === "User") {
+            router.push(`/profile/${id}`);
+          } else if (personType === "Community") {
+            router.push(`/communities/${id}`);
+          }
         }}
       >
         View
