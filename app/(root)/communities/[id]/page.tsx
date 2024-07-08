@@ -72,11 +72,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             </section>
           </TabsContent>
           <TabsContent value="Requests" className="w-full text-light-1">
-            <ThreadsTab
-              currentUserId={user.id}
-              accountId={communityDetails._id}
-              listType="Community"
-            />
+          <p className="no-result">No requests found</p>
           </TabsContent>
         </Tabs>
       </div>
