@@ -52,19 +52,27 @@ const Page = async ({ params }: { params: { id: string } }) => {
               </TabsTrigger>
             ))}
           </TabsList>
-          {profileTabs.map((tab) => (
-            <TabsContent
-              key={`content-${tab.label}`}
-              value={tab.label}
-              className="w-full text-light-1"
-            >
-              <ThreadsTab
-                currentUserId={user.id}
-                accountId={userInfo.id}
-                accountType="User"
-              />
-            </TabsContent>
-          ))}
+          <TabsContent value="Threads" className="w-full text-light-1">
+            <ThreadsTab
+              currentUserId={user.id}
+              accountId={userInfo.id}
+              listType="User"
+            />
+          </TabsContent>
+          <TabsContent value="Replies" className="w-full text-light-1">
+            <ThreadsTab
+              currentUserId={user.id}
+              accountId={userInfo.id}
+              listType="Replies"
+            />
+          </TabsContent>
+          <TabsContent value="Tagged" className="w-full text-light-1">
+            <ThreadsTab
+              currentUserId={user.id}
+              accountId={userInfo.id}
+              listType="Tagged"
+            />
+          </TabsContent>
         </Tabs>
       </div>
     </section>

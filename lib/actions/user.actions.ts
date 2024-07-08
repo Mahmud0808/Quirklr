@@ -119,27 +119,63 @@ export async function fetchUserThreads(userId: string) {
     connectToDB();
 
     // Find all threads authored by the user
-    const threads = await User.findOne({ id: userId })
+    const threads = await User.findOne({ id: userId }).populate({
+      path: "threads",
+      model: Thread,
+      options: { sort: { createdAt: "desc" } },
+      populate: [
+        {
+          path: "community",
+          model: Community,
+          select: "_id id name image",
+        },
+        {
+          path: "children",
+          model: Thread,
+          populate: {
+            path: "author",
+            model: User,
+            select: "id name image",
+          },
+        },
+      ],
+    });
+
+    return threads;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user threads: ${error.message}`);
+  }
+}
+
+export async function fetchUserReplies(userId: string) {
+  try {
+    connectToDB();
+
+    // Find all threads authored by the user
+    const user = await User.findOne({ id: userId });
+
+    if (!user) {
+      throw new Error(`User with ID ${userId} not found`);
+    }
+
+    const threads = await Thread.find({
+      author: user._id,
+      parentId: { $ne: null },
+    })
       .sort({ createdAt: "desc" })
       .populate({
-        path: "threads",
+        path: "author",
+        model: User,
+        select: "id name image",
+      })
+      .populate({
+        path: "children",
         model: Thread,
-        populate: [
-          {
-            path: "community",
-            model: Community,
-            select: "_id id name image",
-          },
-          {
-            path: "children",
-            model: Thread,
-            populate: {
-              path: "author",
-              model: User,
-              select: "id name image",
-            },
-          },
-        ],
+        populate: {
+          path: "author",
+          model: User,
+          select: "id name image",
+        },
       });
 
     return threads;
@@ -169,5 +205,42 @@ export async function fetchActivities(userId: string) {
     return comments;
   } catch (error: any) {
     throw new Error(`Failed to fetch activities: ${error.message}`);
+  }
+}
+
+export async function fetchTaggedThreads(userId: string) {
+  try {
+    connectToDB();
+
+    // Find all threads authored by the user
+    const user = await User.findOne({ id: userId });
+
+    if (!user) {
+      throw new Error(`User with ID ${userId} not found`);
+    }
+
+    // Find all threads that contain the user's username
+    const threads = await Thread.find({
+      text: { $regex: "@" + user.username, $options: "i" },
+    })
+      .sort({ createdAt: "desc" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "id name image",
+      })
+      .populate({
+        path: "children",
+        model: Thread,
+        populate: {
+          path: "author",
+          model: User,
+          select: "id name image",
+        },
+      });
+
+    return threads;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user tagged threads: ${error.message}`);
   }
 }
