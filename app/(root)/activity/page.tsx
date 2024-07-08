@@ -5,9 +5,9 @@ import {
 } from "@/lib/actions/user.actions";
 import { timeAgo } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 const Page = async () => {
   const user = await currentUser();
@@ -17,15 +17,6 @@ const Page = async () => {
   }
 
   const userInfo = await fetchUser(user.id);
-
-  // Fetch all user
-  const result = await fetchUsers({
-    userId: user.id,
-    searchString: "",
-    pageNumber: 1,
-    pageSize: 25,
-    sortBy: "desc",
-  });
 
   if (!userInfo?.onboarded) {
     redirect("/onboarding");
@@ -50,13 +41,15 @@ const Page = async () => {
                     alt="profile image"
                     width={28}
                     height={28}
-                    className="rounded-full object-cover"
+                    className="object-center rounded-full w-7 h-7"
                   />
                   <p className="ml-2 !text-small-regular text-light-1">
                     <span className="text-primary-500">
                       <b>{activity.author.name}</b>
                     </span>{" "}
-                    commented on your thread.
+                    {activity.type === "comment"
+                      ? "commented on your thread."
+                      : "replied to your comment."}
                   </p>
                   <p className="ml-auto !text-small-regular text-gray-1">
                     {timeAgo(new Date(activity.createdAt))}

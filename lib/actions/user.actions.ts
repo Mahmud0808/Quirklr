@@ -200,9 +200,54 @@ export async function fetchActivities(userId: string) {
     const comments = await Thread.find({
       _id: { $in: childThreadIds },
       author: { $ne: userId },
-    }).populate({ path: "author", model: User, select: "_id name image" });
+    }).populate({ path: 'author', model: User, select: '_id name image' });
 
-    return comments;
+    // Find all replies made by the user
+    const userReplies = await Thread.find({
+      author: userId,
+      parentId: { $ne: null },
+    })
+      .sort({ createdAt: "desc" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id name image",
+      })
+      .populate({
+        path: "children",
+        model: Thread,
+        populate: {
+          path: "author",
+          model: User,
+          select: "_id name image",
+        },
+      });
+
+    // Gather all children of the user's replies
+    const replyThreadIds = userReplies.reduce((acc, reply) => {
+      return acc.concat(reply.children);
+    }, []);
+
+    const repliesToUserReplies = await Thread.find({
+      _id: { $in: replyThreadIds },
+      author: { $ne: userId },
+    }).populate({ path: 'author', model: User, select: '_id name image' });
+
+    // Combine comments and replies with a type property and remove duplicates
+    const activities = [
+      ...comments.map(comment => ({ ...comment.toObject(), type: 'comment' })),
+      ...repliesToUserReplies.map(reply => ({ ...reply.toObject(), type: 'reply' })),
+    ];
+
+    // Remove duplicates based on thread ID
+    const uniqueActivities = Array.from(
+      new Map(activities.map(activity => [activity._id.toString(), activity])).values()
+    );
+
+    // Sort by time
+    uniqueActivities.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+
+    return uniqueActivities;
   } catch (error: any) {
     throw new Error(`Failed to fetch activities: ${error.message}`);
   }
