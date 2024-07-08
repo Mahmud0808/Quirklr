@@ -122,8 +122,9 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                     <Image
                       src={field.value}
                       alt="profile photo"
-                      fill
-                      className="rounded-full object-fill"
+                      height={80}
+                      width={80}
+                      className="object-center rounded-full h-28 w-28 shadow-2xl"
                     />
                   </div>
                 ) : (

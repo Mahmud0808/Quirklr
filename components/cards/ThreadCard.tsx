@@ -154,7 +154,7 @@ const ThreadCard = ({
                   height={24}
                   className={`${
                     index !== 0 && "-ml-5"
-                  } rounded-full object-cover`}
+                  } object-center rounded-full w-6 h-6`}
                 />
               ))}
               <Link href={`/thread/${id}`}>
@@ -175,14 +175,13 @@ const ThreadCard = ({
               >
                 <div className="flex items-center">
                   <b>{community.name}</b>
-                  <div className="relative h-4 w-4">
-                    <Image
-                      src={community.image}
-                      alt="community image"
-                      fill
-                      className="ml-1 rounded-full"
-                    />
-                  </div>
+                  <Image
+                    src={community.image}
+                    alt="community image"
+                    height={16}
+                    width={16}
+                    className="ml-1 object-center rounded-full w-4 h-4"
+                  />
                 </div>
               </Link>
             </>

@@ -8,13 +8,12 @@ interface Props {
   name: string;
   username: string;
   imgUrl: string;
-  bio: string;
   members: {
     image: string;
   }[];
 }
 
-function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
+function CommunityCard({ id, name, username, imgUrl, members }: Props) {
   return (
     <article className="community-card">
       <div className="flex flex-wrap items-center gap-3">
@@ -35,11 +34,7 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
         </div>
       </div>
 
-      <p className="mt-4 text-subtle-medium text-gray-1">
-        {bio.length > 100 ? `${bio.slice(0, 80)}...` : bio}
-      </p>
-
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
         <Link href={`/communities/${id}`}>
           <Button size="sm" className="community-card_btn">
             View
@@ -48,7 +43,7 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
 
         {members.length > 0 && (
           <div className="flex items-center">
-            {members.map((member, index) => (
+            {members.slice(0, 5).map((member, index) => (
               <Image
                 key={index}
                 src={member.image}
@@ -57,10 +52,10 @@ function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
                 height={28}
                 className={`${
                   index !== 0 && "-ml-2"
-                } rounded-full object-cover`}
+                } object-center rounded-full w-7 h-7`}
               />
             ))}
-            {members.length > 3 && (
+            {members.length > 5 && (
               <p className="ml-1 text-subtle-medium text-gray-1">
                 {members.length}+ Users
               </p>
