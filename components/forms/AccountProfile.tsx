@@ -118,14 +118,14 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             <FormItem className="flex flex-col items-center gap-4">
               <FormLabel className="account-form_image-label">
                 {field.value ? (
-                  <Image
-                    src={field.value}
-                    alt="profile photo"
-                    width={108}
-                    height={108}
-                    priority
-                    className="rounded-full object-contain"
-                  />
+                  <div className="relative h-28 w-28 object-cover">
+                    <Image
+                      src={field.value}
+                      alt="profile photo"
+                      fill
+                      className="rounded-full object-fill"
+                    />
+                  </div>
                 ) : (
                   <Image
                     src="/assets/profile.svg"
@@ -213,7 +213,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           )}
         />
         <Button type="submit" className="bg-primary-500">
-          Submit
+          {btnTitle}
         </Button>
       </form>
     </Form>

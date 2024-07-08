@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 
@@ -18,7 +18,9 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({ text }) => {
       return (
         <>
           {text}{" "}
-          <button onClick={toggleText} className="text-gray-400 font-bold">Show less</button>
+          <button onClick={toggleText} className="text-gray-400 font-bold">
+            Show less
+          </button>
         </>
       );
     }
@@ -27,7 +29,9 @@ const ExpandableText: React.FC<ExpandableTextProps> = ({ text }) => {
       return (
         <>
           {text.substring(0, 200)}...{" "}
-          <button onClick={toggleText} className="text-gray-400 font-bold">Show more</button>
+          <button onClick={toggleText} className="text-gray-400 font-bold">
+            Show more
+          </button>
         </>
       );
     }

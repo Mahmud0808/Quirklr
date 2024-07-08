@@ -1,4 +1,5 @@
 import Image from "next/image";
+import EditProfile from "../forms/EditProfile";
 
 interface Props {
   accountId: string;
@@ -38,6 +39,7 @@ const ProfileHeader = ({
             <p className="text-base-medium text-gray-1">@{username}</p>
           </div>
         </div>
+        <EditProfile currentUserId={authUserId} authorId={accountId} />
       </div>
       {/* TODO: Community */}
       <p className="mt-6 max-w-lg text-base-regular text-light-2">{bio}</p>
