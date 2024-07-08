@@ -1,4 +1,5 @@
 import UserCard from "@/components/cards/UserCard";
+import LoadMoreButton from "@/components/shared/LoadMoreButton";
 import SearchBar from "@/components/shared/Searchbar";
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
@@ -52,6 +53,12 @@ async function Page({
           </>
         )}
       </div>
+      <LoadMoreButton
+        routeType="search"
+        hasNextPage={result.hasNext}
+        currentPage={searchParams?.page ? +searchParams.page : 1}
+        currentSearch={searchParams.q}
+        />
     </section>
   );
 }

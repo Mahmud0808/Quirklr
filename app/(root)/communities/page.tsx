@@ -1,4 +1,5 @@
 import CommunityCard from "@/components/cards/CommunityCard";
+import LoadMoreButton from "@/components/shared/LoadMoreButton";
 import SearchBar from "@/components/shared/SearchBar";
 import { fetchCommunities } from "@/lib/actions/community.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
@@ -55,6 +56,12 @@ async function Page({
           </>
         )}
       </div>
+      <LoadMoreButton
+        routeType="communities"
+        hasNextPage={result.hasNext}
+        currentPage={searchParams?.page ? +searchParams.page : 1}
+        currentSearch={searchParams.q}
+      />
     </section>
   );
 }
