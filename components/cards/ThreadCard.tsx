@@ -27,6 +27,7 @@ interface Props {
   }[];
   isComment?: boolean;
   isViewingThread?: boolean;
+  isViewingCommunity?: boolean;
 }
 
 const ThreadCard = ({
@@ -40,6 +41,7 @@ const ThreadCard = ({
   comments,
   isComment,
   isViewingThread = false,
+  isViewingCommunity = false,
 }: Props) => {
   return (
     <article
@@ -164,7 +166,7 @@ const ThreadCard = ({
             </div>
           )}
           {!isComment && formatDateString(createdAt)}
-          {!isComment && community && (
+          {!isComment && !isViewingCommunity && community && (
             <>
               &nbsp;-&nbsp;
               <Link
