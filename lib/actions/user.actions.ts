@@ -70,17 +70,17 @@ export async function fetchUsers({
   sortBy = "desc",
 }: {
   userId: string;
-  searchString: string;
-  pageNumber: number;
-  pageSize: number;
-  sortBy: SortOrder;
+  searchString?: string;
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: SortOrder;
 }) {
   try {
     connectToDB();
 
     const skipAmount = (pageNumber - 1) * pageSize;
 
-    const regex = new RegExp(searchString, "i");
+    const regex = new RegExp(searchString.trim(), "i");
 
     const query: FilterQuery<typeof User> = {
       id: { $ne: userId },

@@ -120,7 +120,7 @@ export async function fetchCommunities({
     const skipAmount = (pageNumber - 1) * pageSize;
 
     // Create a case-insensitive regular expression for the provided search string.
-    const regex = new RegExp(searchString, "i");
+    const regex = new RegExp(searchString.trim(), "i");
 
     // Create an initial query object to filter communities.
     const query: FilterQuery<typeof Community> = {};
