@@ -112,7 +112,7 @@ const ThreadCard = ({
         {/* TODO: Show comment previews */}
       </div>
       <div className="mt-5 flex items-center">
-        <p className="flex items-center text-subtle-medium text-gray-1">
+        <span className="flex items-center text-subtle-medium text-gray-1">
           {formatDateString(createdAt)}
           {!isComment && community && (
             <>
@@ -135,7 +135,7 @@ const ThreadCard = ({
               </Link>
             </>
           )}
-        </p>
+        </span>
       </div>
     </article>
   );
