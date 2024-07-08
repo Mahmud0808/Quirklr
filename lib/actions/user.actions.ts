@@ -119,26 +119,28 @@ export async function fetchUserThreads(userId: string) {
     connectToDB();
 
     // Find all threads authored by the user
-    const threads = await User.findOne({ id: userId }).populate({
-      path: "threads",
-      model: Thread,
-      populate: [
-        {
-          path: "community",
-          model: Community,
-          select: "_id id name image",
-        },
-        {
-          path: "children",
-          model: Thread,
-          populate: {
-            path: "author",
-            model: User,
-            select: "id name image",
+    const threads = await User.findOne({ id: userId })
+      .sort({ createdAt: "desc" })
+      .populate({
+        path: "threads",
+        model: Thread,
+        populate: [
+          {
+            path: "community",
+            model: Community,
+            select: "_id id name image",
           },
-        },
-      ],
-    });
+          {
+            path: "children",
+            model: Thread,
+            populate: {
+              path: "author",
+              model: User,
+              select: "id name image",
+            },
+          },
+        ],
+      });
 
     return threads;
   } catch (error: any) {

@@ -73,26 +73,28 @@ export async function fetchCommunityThreads(id: string) {
   try {
     connectToDB();
 
-    const communityThreads = await Community.findById(id).populate({
-      path: "threads",
-      model: Thread,
-      populate: [
-        {
-          path: "author",
-          model: User,
-          select: "id name image", // Select the "name" and "_id" fields from the "User" model
-        },
-        {
-          path: "children",
-          model: Thread,
-          populate: {
+    const communityThreads = await Community.findById(id)
+      .sort({ createdAt: "desc" })
+      .populate({
+        path: "threads",
+        model: Thread,
+        populate: [
+          {
             path: "author",
             model: User,
-            select: "_id image", // Select the "name" and "_id" fields from the "User" model
+            select: "id name image", // Select the "name" and "_id" fields from the "User" model
           },
-        },
-      ],
-    });
+          {
+            path: "children",
+            model: Thread,
+            populate: {
+              path: "author",
+              model: User,
+              select: "_id image", // Select the "name" and "_id" fields from the "User" model
+            },
+          },
+        ],
+      });
 
     return communityThreads;
   } catch (error) {
