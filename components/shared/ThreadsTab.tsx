@@ -38,6 +38,8 @@ const ThreadsTab = async ({ currentUserId, accountId, listType }: Props) => {
     noresult = "No threads found";
   } else if (listType === "UserReplies") {
     noresult = "No replies found";
+  } else if (listType === "Tagged") {
+    noresult = "No tagged threads found";
   }
 
   return (
