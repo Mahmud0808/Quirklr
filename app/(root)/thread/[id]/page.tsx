@@ -37,6 +37,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
           community={thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
+          isViewingThread={true}
         />
       </div>
       <div className="mt-7">

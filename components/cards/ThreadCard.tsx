@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ExpandableText from "../ui/ExpandableText";
+import DeleteThread from "../forms/DeleteThread";
 import { formatDateString } from "@/lib/utils";
 
 interface Props {
@@ -25,6 +26,7 @@ interface Props {
     };
   }[];
   isComment?: boolean;
+  isViewingThread?: boolean;
 }
 
 const ThreadCard = ({
@@ -37,6 +39,7 @@ const ThreadCard = ({
   createdAt,
   comments,
   isComment,
+  isViewingThread = false,
 }: Props) => {
   return (
     <article
@@ -97,23 +100,70 @@ const ThreadCard = ({
                   className="cursor-pointer object-contain"
                 />
               </div>
-              {isComment && comments.length > 0 && (
-                <Link href={`/thread/${id}`}>
-                  <p className="mt-1 text-subtle-medium text-gray-1">
-                    {comments.length}{" "}
-                    {comments.length > 1 ? "replies" : "reply"}
-                  </p>
-                </Link>
-              )}
+              <div className="flex items-center">
+                {isComment && comments.length > 0 && (
+                  <div className="flex items-center gap-2">
+                    {comments.slice(0, 2).map((comment, index) => (
+                      <Image
+                        key={index}
+                        src={comment.author.image}
+                        alt={`user_${index}`}
+                        width={24}
+                        height={24}
+                        className={`${
+                          index !== 0 && "-ml-5"
+                        } rounded-full object-cover`}
+                      />
+                    ))}
+                    <Link href={`/thread/${id}`}>
+                      <p className="text-subtle-medium text-gray-1">
+                        {comments.length}{" "}
+                        {comments.length > 1 ? "replies" : "reply"}
+                        &nbsp;-&nbsp;
+                      </p>
+                    </Link>
+                  </div>
+                )}
+                <p className="text-subtle-medium text-gray-1">
+                  {isComment && formatDateString(createdAt)}
+                </p>
+              </div>
             </div>
           </div>
         </div>
-        {/* TODO: Delete thread */}
-        {/* TODO: Show comment previews */}
+        <DeleteThread
+          threadId={JSON.stringify(id)}
+          currentUserId={currentUserId}
+          authorId={author.id}
+          parentId={parentId}
+          isComment={isComment}
+        />
       </div>
       <div className="mt-5 flex items-center">
-        <span className="flex items-center text-subtle-medium text-gray-1">
-          {formatDateString(createdAt)}
+        <span className="flex items-center justify-center text-subtle-medium text-gray-1">
+          {!isViewingThread && !isComment && comments.length > 0 && (
+            <div className="ml-2 flex items-center gap-2">
+              {comments.slice(0, 2).map((comment, index) => (
+                <Image
+                  key={index}
+                  src={comment.author.image}
+                  alt={`user_${index}`}
+                  width={24}
+                  height={24}
+                  className={`${
+                    index !== 0 && "-ml-5"
+                  } rounded-full object-cover`}
+                />
+              ))}
+              <Link href={`/thread/${id}`}>
+                <p className="text-subtle-medium text-gray-1">
+                  {comments.length} {comments.length > 1 ? "replies" : "reply"}
+                  &nbsp;-&nbsp;
+                </p>
+              </Link>
+            </div>
+          )}
+          {!isComment && formatDateString(createdAt)}
           {!isComment && community && (
             <>
               &nbsp;-&nbsp;
