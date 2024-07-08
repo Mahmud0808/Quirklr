@@ -1,6 +1,6 @@
 import UserCard from "@/components/cards/UserCard";
 import LoadMoreButton from "@/components/shared/LoadMoreButton";
-import SearchBar from "@/components/shared/Searchbar";
+import SearchBar from "@/components/shared/SearchBar";
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
