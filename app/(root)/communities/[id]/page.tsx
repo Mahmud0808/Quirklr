@@ -62,7 +62,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
               {communityDetails?.members?.map((member: any) => (
                 <UserCard
                   key={member._id}
-                  id={member._id}
+                  id={member.id}
                   name={member.name}
                   username={member.username}
                   imgUrl={member.image}
