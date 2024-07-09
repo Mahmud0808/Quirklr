@@ -138,6 +138,11 @@ export async function fetchUserThreads(userId: string) {
             select: "id name image",
           },
         },
+        {
+          path: "likedBy",
+          model: User,
+          select: "_id id",
+        },
       ],
     });
 
@@ -176,6 +181,11 @@ export async function fetchUserReplies(userId: string) {
           model: User,
           select: "id name image",
         },
+      })
+      .populate({
+        path: "likedBy",
+        model: User,
+        select: "_id id",
       });
 
     return threads;
@@ -200,7 +210,7 @@ export async function fetchActivities(userId: string) {
     const comments = await Thread.find({
       _id: { $in: childThreadIds },
       author: { $ne: userId },
-    }).populate({ path: 'author', model: User, select: '_id name image' });
+    }).populate({ path: "author", model: User, select: "_id name image" });
 
     // Find all replies made by the user
     const userReplies = await Thread.find({
@@ -231,17 +241,25 @@ export async function fetchActivities(userId: string) {
     const repliesToUserReplies = await Thread.find({
       _id: { $in: replyThreadIds },
       author: { $ne: userId },
-    }).populate({ path: 'author', model: User, select: '_id name image' });
+    }).populate({ path: "author", model: User, select: "_id name image" });
 
     // Combine comments and replies with a type property and remove duplicates
     const activities = [
-      ...comments.map(comment => ({ ...comment.toObject(), type: 'comment' })),
-      ...repliesToUserReplies.map(reply => ({ ...reply.toObject(), type: 'reply' })),
+      ...comments.map((comment) => ({
+        ...comment.toObject(),
+        type: "comment",
+      })),
+      ...repliesToUserReplies.map((reply) => ({
+        ...reply.toObject(),
+        type: "reply",
+      })),
     ];
 
     // Remove duplicates based on thread ID
     const uniqueActivities = Array.from(
-      new Map(activities.map(activity => [activity._id.toString(), activity])).values()
+      new Map(
+        activities.map((activity) => [activity._id.toString(), activity])
+      ).values()
     );
 
     // Sort by time
@@ -282,6 +300,11 @@ export async function fetchTaggedThreads(userId: string) {
           model: User,
           select: "id name image",
         },
+      })
+      .populate({
+        path: "likedBy",
+        model: User,
+        select: "_id id",
       });
 
     return threads;

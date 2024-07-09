@@ -1,4 +1,8 @@
-import { fetchTaggedThreads, fetchUserReplies, fetchUserThreads } from "@/lib/actions/user.actions";
+import {
+  fetchTaggedThreads,
+  fetchUserReplies,
+  fetchUserThreads,
+} from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 import ThreadCard from "../cards/ThreadCard";
 import { fetchCommunityThreads } from "@/lib/actions/community.actions";
@@ -49,14 +53,18 @@ const ThreadsTab = async ({ currentUserId, accountId, listType }: Props) => {
       ) : (
         finalResult.map((thread: any) => (
           <ThreadCard
-            key={thread._id}
-            id={thread._id}
+            key={thread._id.toString()}
+            id={thread._id.toString()}
             currentUserId={currentUserId}
             parentId={thread.parentId}
             content={thread.text}
             author={
               listType === "User"
-                ? { id: userObject.id, name: userObject.name, image: userObject.image }
+                ? {
+                    id: userObject.id,
+                    name: userObject.name,
+                    image: userObject.image,
+                  }
                 : {
                     id: thread.author.id,
                     name: thread.author.name,
@@ -67,6 +75,7 @@ const ThreadsTab = async ({ currentUserId, accountId, listType }: Props) => {
             createdAt={thread.createdAt}
             comments={thread.children}
             isViewingCommunity={listType === "Community"}
+            likes={thread.likedBy}
           />
         ))
       )}

@@ -179,6 +179,11 @@ export async function fetchThreadById(threadId: string) {
         select: "_id id name image",
       })
       .populate({
+        path: "likedBy",
+        model: User,
+        select: "_id id",
+      })
+      .populate({
         path: "children",
         populate: [
           {
@@ -194,6 +199,11 @@ export async function fetchThreadById(threadId: string) {
               model: User,
               select: "_id id name parentId image",
             },
+          },
+          {
+            path: "likedBy",
+            model: User,
+            select: "_id id",
           },
         ],
       })

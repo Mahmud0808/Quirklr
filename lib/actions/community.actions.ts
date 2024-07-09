@@ -91,6 +91,11 @@ export async function fetchCommunityThreads(id: string) {
               select: "_id image",
             },
           },
+          {
+            path: "likedBy",
+            model: User,
+            select: "_id id",
+          },
         ],
       });
 
