@@ -1,9 +1,17 @@
 import ThreadCard from "@/components/cards/ThreadCard";
+import LoadMoreButton from "@/components/shared/LoadMoreButton";
 import { fetchThreads } from "@/lib/actions/thread.actions";
 import { currentUser } from "@clerk/nextjs/server";
 
-export default async function Home() {
-  const threadList = await fetchThreads(1, 30);
+async function Home({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
+  const threadList = await fetchThreads({
+    pageNumber: searchParams?.page ? +searchParams.page : 1,
+    pageSize: 30,
+  });
   const user = await currentUser();
 
   return (
@@ -30,7 +38,14 @@ export default async function Home() {
             ))}
           </>
         )}
+        <LoadMoreButton
+          currentRoute="/"
+          hasNextPage={threadList.hasNext}
+          currentPage={searchParams?.page ? +searchParams.page : 1}
+        />
       </section>
     </>
   );
 }
+
+export default Home;

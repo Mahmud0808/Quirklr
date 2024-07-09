@@ -7,19 +7,17 @@ import User from "../models/user.model";
 import Thread from "../models/thread.model";
 import Community from "../models/community.model";
 
-interface Params {
-  text: string;
-  author: string;
-  communityId: string | null;
-  path: string;
-}
-
 export async function createThread({
   text,
   author,
   communityId,
   path,
-}: Params) {
+}: {
+  text: string;
+  author: string;
+  communityId: string | null;
+  path: string;
+}) {
   try {
     connectToDB();
 
@@ -52,7 +50,13 @@ export async function createThread({
   }
 }
 
-export async function fetchThreads(pageNumber = 1, pageSize = 20) {
+export async function fetchThreads({
+  pageNumber,
+  pageSize,
+}: {
+  pageNumber: number;
+  pageSize: number;
+}) {
   connectToDB();
 
   const skipAmount = (pageNumber - 1) * pageSize;

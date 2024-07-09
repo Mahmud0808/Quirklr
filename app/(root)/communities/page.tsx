@@ -56,7 +56,7 @@ async function Page({
         )}
       </div>
       <LoadMoreButton
-        routeType="communities"
+        currentRoute="/communities"
         hasNextPage={result.hasNext}
         currentPage={searchParams?.page ? +searchParams.page : 1}
         currentSearch={searchParams.q}

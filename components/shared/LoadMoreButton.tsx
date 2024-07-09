@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
 interface Props {
-  routeType: string;
+  currentRoute: string;
   hasNextPage: boolean;
   currentPage: number;
   currentSearch?: string;
 }
 
 function LoadMoreButton({
-  routeType,
+  currentRoute,
   hasNextPage,
   currentPage,
   currentSearch,
@@ -25,7 +25,7 @@ function LoadMoreButton({
       queryParams.set("q", currentSearch);
     }
     queryParams.set("page", nextPage.toString());
-    router.push(`/${routeType}?${queryParams.toString()}`);
+    router.push(`${currentRoute}?${queryParams.toString()}`);
   };
 
   return (
@@ -42,9 +42,9 @@ function LoadMoreButton({
               className="w-5 h-5 ml-2"
               fill="none"
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               viewBox="0 0 24 24"
             >
               <path d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
