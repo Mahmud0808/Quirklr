@@ -16,8 +16,8 @@ export default async function Home() {
           <>
             {threadList.threads.map((thread) => (
               <ThreadCard
-                key={thread._id}
-                id={thread._id}
+                key={thread._id.toString()}
+                id={thread._id.toString()}
                 currentUserId={user?.id || ""}
                 parentId={thread.parentId}
                 content={thread.text}
@@ -25,6 +25,7 @@ export default async function Home() {
                 community={thread.community}
                 createdAt={thread.createdAt}
                 comments={thread.children}
+                likes={thread.likedBy}
               />
             ))}
           </>

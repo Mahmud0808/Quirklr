@@ -3,6 +3,7 @@ import Link from "next/link";
 import ExpandableText from "../ui/ExpandableText";
 import DeleteThread from "../forms/DeleteThread";
 import { formatDateString } from "@/lib/utils";
+import LikeButton from "../shared/LikeButton";
 
 interface Props {
   id: string;
@@ -26,6 +27,9 @@ interface Props {
     };
   }[];
   isComment?: boolean;
+  likes: {
+    id: string;
+  }[];
   isViewingThread?: boolean;
   isViewingCommunity?: boolean;
 }
@@ -40,6 +44,7 @@ const ThreadCard = ({
   createdAt,
   comments,
   isComment,
+  likes,
   isViewingThread = false,
   isViewingCommunity = false,
 }: Props) => {
@@ -71,12 +76,10 @@ const ThreadCard = ({
             <ExpandableText text={content} />
             <div className={`mt-5 flex flex-col gap-3 ${isComment && "mb-10"}`}>
               <div className="flex gap-3.5">
-                <Image
-                  src="/assets/heart-gray.svg"
-                  alt="heart"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer object-contain"
+                <LikeButton
+                  threadId={id}
+                  userId={currentUserId}
+                  likes={likes.map((user: any) => user.id.toString())}
                 />
                 <Link href={`/thread/${id}`}>
                   <Image

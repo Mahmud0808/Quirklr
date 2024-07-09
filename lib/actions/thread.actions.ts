@@ -77,6 +77,11 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
         model: User,
         select: "_id name parentId image",
       },
+    })
+    .populate({
+      path: "likedBy",
+      model: User,
+      select: "_id id",
     });
 
   const totalThreadsCount = await Thread.countDocuments({
@@ -241,5 +246,68 @@ export async function addCommentToThread({
   } catch (err) {
     console.error("Error while adding comment:", err);
     throw new Error("Unable to add comment");
+  }
+}
+
+export async function likeThread(threadId: string, userId: string) {
+  try {
+    connectToDB();
+
+    // Find the thread by its unique id
+    const thread = await Thread.findOne({ _id: threadId });
+
+    if (!thread) {
+      throw new Error("Thread not found");
+    }
+
+    // Find the user by their unique id
+    const user = await User.findOne({ id: userId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Check if the user is already a member of the community
+    if (thread.likedBy.includes(user._id)) {
+      throw new Error("User already liked the thread");
+    }
+
+    // Add the user's _id to the likedBy array in the thread
+    thread.likedBy.push(user._id);
+    await thread.save();
+
+    return { success: true };
+  } catch (err) {
+    console.error("Error while liking thread:", err);
+    throw new Error("Unable to like thread");
+  }
+}
+
+export async function removeLikeFromThread(threadId: string, userId: string) {
+  try {
+    connectToDB();
+
+    const userIdObject = await User.findOne({ id: userId }, { _id: 1 });
+
+    if (!userIdObject) {
+      throw new Error("User not found");
+    }
+
+    const threadIdObject = await Thread.findOne({ _id: threadId }, { _id: 1 });
+
+    if (!threadIdObject) {
+      throw new Error("Thread not found");
+    }
+
+    // Remove the user's _id from the likedBy array in the thread
+    await Thread.updateOne(
+      { _id: threadIdObject._id },
+      { $pull: { likedBy: userIdObject._id } }
+    );
+
+    return { success: true };
+  } catch (err) {
+    console.error("Error while removing like from thread:", err);
+    throw new Error("Unable to remove like from thread");
   }
 }
