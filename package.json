@@ -21,7 +21,7 @@
     "date-fns": "^3.6.0",
     "lucide-react": "^0.400.0",
     "mongoose": "^8.4.4",
-    "next": "14.2.4",
+    "next": "14.2.15",
     "nextjs-toploader": "^1.6.12",
     "obscenity": "^0.2.1",
     "react": "^18",
